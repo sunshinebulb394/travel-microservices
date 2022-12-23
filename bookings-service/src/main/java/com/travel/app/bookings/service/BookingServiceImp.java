@@ -13,18 +13,15 @@ import com.travel.app.bookings.dto.TicketDto;
 import com.travel.app.bookings.dto.TripsDto;
 import com.travel.app.bookings.exceptions.BookingNotFoundException;
 import com.travel.app.bookings.exceptions.BusNotAvailableException;
-import com.travel.app.bookings.pojo.Booking;
-import com.travel.app.bookings.pojo.Trips;
+import com.travel.app.bookings.model.Booking;
+import com.travel.app.bookings.model.Trips;
 import com.travel.app.bookings.repository.BookingRepository;
 import com.travel.app.bookings.repository.TripsRepository;
 
 
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 
 @Service
 public class BookingServiceImp implements BookingServiceInt{

@@ -1,4 +1,4 @@
-package com.travel.app.bookings.pojo;
+package com.travel.app.bookings.model;
 
 import jakarta.persistence.*;
 import lombok.*;

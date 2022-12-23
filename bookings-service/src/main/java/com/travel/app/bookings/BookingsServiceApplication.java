@@ -1,6 +1,6 @@
 package com.travel.app.bookings;
 
-import com.travel.app.bookings.pojo.Booking;
+import com.travel.app.bookings.model.Booking;
 import com.travel.app.bookings.repository.BookingRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

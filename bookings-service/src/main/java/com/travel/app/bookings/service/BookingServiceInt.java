@@ -4,9 +4,7 @@ import java.util.List;
 import com.travel.app.bookings.dto.BookingDto;
 import com.travel.app.bookings.dto.TicketDto;
 import com.travel.app.bookings.exceptions.BusNotAvailableException;
-import com.travel.app.bookings.pojo.Booking;
-
-import reactor.core.publisher.Mono;
+import com.travel.app.bookings.model.Booking;
 
 public interface BookingServiceInt {
     String bookTrip(BookingDto bookingDto) throws BusNotAvailableException;

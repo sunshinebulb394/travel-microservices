@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.List;
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class TripsDto {
     private Long id;
     private BigDecimal costOfTrip;

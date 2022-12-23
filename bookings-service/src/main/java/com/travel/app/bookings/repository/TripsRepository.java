@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.travel.app.bookings.pojo.Trips;
+import com.travel.app.bookings.model.Trips;
 
 
 public interface TripsRepository extends JpaRepository<Trips, Long> {

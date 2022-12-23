@@ -1,4 +1,4 @@
-package com.travel.app.bookings.pojo;
+package com.travel.app.bookings.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
