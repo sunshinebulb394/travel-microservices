@@ -1,12 +1,25 @@
 package com.travel.app.user.service;
 
+import com.travel.app.user.dto.AccountDto;
 import com.travel.app.user.model.Account;
+
+import java.util.List;
 
 public interface AccountServiceInt {
     Account findByUsername(String username);
 
-    Account save(Account account);
+    Account saveUser(AccountDto accountDto);
+    Account saveAdmin(AccountDto accountDto);
 
-    void delete(Account account);
+    Account updateAccount(AccountDto accountDto);
+
+    String deleteUser(Long id);
+    String deleteAdmin(Long id);
+
+    List<Account> getAllUserAccounts();
+
+    List<Account> getAllAdminAccounts();
+
+
 
 }

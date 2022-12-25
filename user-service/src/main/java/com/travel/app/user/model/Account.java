@@ -34,5 +34,8 @@ public class Account {
 //    private boolean credentialsExpired = false;
 //    private boolean expired = false;
 //    private boolean locked = false;
+
+    @ElementCollection(fetch = EAGER)
+    @Enumerated(EnumType.STRING)
     private Set<RoleName> roles;
 }
