@@ -5,7 +5,6 @@ import com.travel.app.bus.service.AccountServiceImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.login.AccountNotFoundException;
@@ -44,6 +43,7 @@ public class AccountController {
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasRole('ADMIN', 'USER')")
     public ResponseEntity<Account> updateAccount(@PathVariable("id") Long id, @RequestBody Account account) throws AccountNotFoundException {
         return ResponseEntity.ok(accountService.updateAccount(id, account));
     }

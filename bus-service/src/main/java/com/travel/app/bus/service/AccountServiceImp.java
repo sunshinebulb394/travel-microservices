@@ -57,9 +57,6 @@ public class AccountServiceImp implements AccountServiceInt {
 
     public Account updateAccount(Long id, Account account) throws AccountNotFoundException {
     return  accountRepository.findById(id).map(account1 -> {
-        if(account.getUsername() != null) {
-            throw new RuntimeException("Username cannot be updated");
-        }
         account1.setPassword(encoder.encode(account.getPassword()));
         return accountRepository.save(account1);
         }).orElseThrow(() -> new AccountNotFoundException("Account not found"));
