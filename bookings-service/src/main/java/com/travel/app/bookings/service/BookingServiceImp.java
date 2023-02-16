@@ -1,6 +1,7 @@
 package com.travel.app.bookings.service;
 
-import org.apache.commons.lang.RandomStringUtils;
+import com.travel.app.bookings.pojo.Trip;
+import com.travel.app.bookings.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -10,21 +11,20 @@ import com.travel.app.bookings.config.WebClientConfig;
 import com.travel.app.bookings.dto.BookingDto;
 import com.travel.app.bookings.dto.BusResponse;
 import com.travel.app.bookings.dto.TicketDto;
-import com.travel.app.bookings.dto.TripsDto;
 import com.travel.app.bookings.exceptions.BookingNotFoundException;
 import com.travel.app.bookings.exceptions.BusNotAvailableException;
 import com.travel.app.bookings.pojo.Booking;
-import com.travel.app.bookings.pojo.Trips;
 import com.travel.app.bookings.repository.BookingRepository;
-import com.travel.app.bookings.repository.TripsRepository;
+
 
 
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
+import java.awt.print.Book;
 import java.util.List;
-import java.util.Random;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingServiceImp implements BookingServiceInt{
@@ -35,24 +35,22 @@ public class BookingServiceImp implements BookingServiceInt{
 	    @Autowired
 	    private WebClientConfig webClientConfig;
 	    
-	    @Autowired
-	    private TripsRepository tripsRepository;
+		@Autowired
+		private TripRepository tripRepository;
 
 
 	    @Override
-	    public String bookTrip(BookingDto bookingDto)  {
+	    public Booking bookTrip(BookingDto bookingDto)  {
 	        Booking booking = new Booking();
-	        booking.setBookingNumber(RandomStringUtils.randomAlphanumeric(10).toUpperCase());
-	        booking.setDateBooked(bookingDto.getDateBooked());
-	        booking.setPickupLocation(bookingDto.getPickupLocation());
+			String shortUuid = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8);
+			booking.setBookingNumber(shortUuid);
+			booking.setPickupLocation(bookingDto.getPickupLocation());
 	        booking.setPickupTime(bookingDto.getPickupTime());
-	        booking.setNumOfPersons(bookingDto.getNumOfPersons());
-
-	        booking.setTrip(mapToDto(bookingDto.getTrip()));
-	        
-	       
-	        String busType = bookingDto.getTrip().getBusType();
-	                			
+			booking.setPassengerName(bookingDto.getPassengerName());
+			booking.setTravelDate(bookingDto.getTravelDate());
+			booking.setBusType(bookingDto.getBusType());
+			booking.setDestination(bookingDto.getDestination());
+	        booking.setPhoneNumber(bookingDto.getPhoneNumber());
 
 	       
 	        // Call Bus Service, and book trip if bus is available
@@ -60,7 +58,7 @@ public class BookingServiceImp implements BookingServiceInt{
 	                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 	                .build()
 	                .get()
-	                .uri("http://bus-service/bus/bus-order",uriBuilder -> uriBuilder.queryParam("bus-type",busType).build())
+	                .uri("http://bus-service/api/bus/bus-order/booking-service",uriBuilder -> uriBuilder.queryParam("bus-type",bookingDto.getBusType()).build())
 	                .retrieve()
 	                .bodyToMono(BusResponse.class)
 	                .block();
@@ -71,51 +69,46 @@ public class BookingServiceImp implements BookingServiceInt{
 	    
 	        if (busIsAvailable){
 	        	bookingRepository.save(booking);
-				return "Trip Booked";
+				return booking;
 	       }
 	        else
 	        	throw new BusNotAvailableException("Bus Not Available");
 	        
 	    }
 	    
-	    private Trips mapToDto(TripsDto tripsDto) {
-	        Trips trips = new Trips();
-	        trips.setCostOfTrip(tripsDto.getCostOfTrip());
-	        trips.setBusType(tripsDto.getBusType());
-	        trips.setDestination(tripsDto.getDestination());
-	        trips.setPassengerName(tripsDto.getPassengerName());
-	        trips.setSeatNumber(tripsDto.getSeatNumber());
-	        return trips;
-	    }
+
 
 	    @Override
 	    public String updateBooking(Long id, BookingDto bookingDto) {
 	        
 	    	bookingRepository.findById(id).map(booking -> {
-	    		booking.setNumOfPersons(bookingDto.getNumOfPersons());
-	    		booking.setDateBooked(bookingDto.getDateBooked());
+
+	    		booking.setTravelDate(bookingDto.getTravelDate());
 	    		booking.setPickupLocation(bookingDto.getPickupLocation());
 	    		booking.setPickupTime(bookingDto.getPickupTime());
-	    		
-	    		Trips trip = tripsRepository.findById(id).stream()
-	    							.map(updatedBooking -> {
-	    								updatedBooking.setBusType(bookingDto.getTrip().getBusType());
-	    								updatedBooking.setCostOfTrip(bookingDto.getTrip().getCostOfTrip());
-	    								updatedBooking.setDestination(bookingDto.getTrip().getDestination());
-	    								updatedBooking.setPassengerName(bookingDto.getTrip().getPassengerName());
-	    								updatedBooking.setSeatNumber(bookingDto.getTrip().getSeatNumber());
-	    								return tripsRepository.save(updatedBooking);
-	    							}).findFirst().get();
-	    		booking.setTrip(trip);
-	    	
+				booking.setBusType(bookingDto.getBusType());
+				booking.setDestination(bookingDto.getDestination());
+				booking.setPassengerName(bookingDto.getPassengerName());
 	    		return bookingRepository.save(booking);
 	    	}).orElseThrow(()-> new BookingNotFoundException("Booking not found"));
 	    	return "Booking updated";
 	    }
-      
-	    
 
-		@Override
+
+	@Override
+	public List<Booking> getBookingById(String id) {
+		return bookingRepository.findAll()
+				.stream()
+				.filter(num -> {
+					String bookingNumber = num.getBookingNumber();
+					return bookingNumber != null && bookingNumber.equals(id);
+				})
+				.collect(Collectors.toList());
+	}
+
+
+
+	@Override
 	    public List<Booking> getAllBookings() {
 	     return bookingRepository.findAll();
 	    }
@@ -128,23 +121,25 @@ public class BookingServiceImp implements BookingServiceInt{
 
 
 
-	public void deleteTrip(Long id) {
-		bookingRepository.findById(id).map(booking->{
-			booking.setTrip(null);
-			return bookingRepository.save(booking);
-		}).orElseThrow(()-> new BookingNotFoundException("Booking not found"));
-	}
+
 
 
 	public TicketDto generateTicket(String bookingNumber) {
 		Booking booking = bookingRepository.findByBookingNumber(bookingNumber).get();
-
+		String busType = booking.getBusType();
+		String destination = booking.getDestination();
+		Optional<Trip> costOfTrip = tripRepository.findByDestination(destination);
+		double cost = costOfTrip.get().getCostOfTrip();
+		if(booking.getBusType().equals("VVIP")){
+			cost += 100;
+		}
+		int seatNum = (int)(Math.random() * 4) + 1;
 		TicketDto ticketRequest	=	TicketDto.builder()
 				.ticketNumber(booking.getBookingNumber())
-				.busType(booking.getTrip().getBusType())
-				.price(booking.getTrip().getCostOfTrip())
-				.seatNumber(booking.getTrip().getSeatNumber())
-				.passengerName(booking.getTrip().getPassengerName())
+				.price(cost)
+				.seatNumber(seatNum)
+				.busType(booking.getBusType())
+				.passengerName(booking.getPassengerName())
 				.build();
 
 		return webClientConfig.webClientBuilder()

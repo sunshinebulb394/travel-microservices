@@ -46,7 +46,7 @@ public class BusController {
         busServiceImp.deleteBus(id);
     }
 
-    @GetMapping("/bus-order")
+    @GetMapping("/bus-order/booking-service")
     public ResponseEntity<?> isAvailable(@RequestParam("bus-type") String busType) {
         return new ResponseEntity<>(busServiceImp.isAvailable(busType),HttpStatus.OK);
     }

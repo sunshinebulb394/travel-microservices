@@ -34,13 +34,29 @@ public class BookingController {
                                       @RequestHeader("Authorization")String authorization){
         HttpHeaders headers = new HttpHeaders();
 
-        headers.setContentType(MediaType.TEXT_PLAIN);
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
         if(MediaType.APPLICATION_JSON_VALUE.equals(contentType)&& bearerToken.contentEquals(authorization)){
-            String addBooking = bookingServiceImp.bookTrip(bookingDto);
+            Booking addBooking = bookingServiceImp.bookTrip(bookingDto);
+
             return new ResponseEntity<>(addBooking, headers, HttpStatus.CREATED);
         }
        return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> getBookingById(@RequestParam("id") String id,
+                                      @RequestHeader("Content-Type") String contentType,
+                                      @RequestHeader("Authorization")String authorization){
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        if(MediaType.TEXT_PLAIN_VALUE.equals(contentType)&& bearerToken.contentEquals(authorization)){
+            List<Booking> bookings = bookingServiceImp.getBookingById(id);
+            return new ResponseEntity<>(bookings, headers, HttpStatus.OK);
+        }
+        return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
     }
     
     @PutMapping("/update-booking")

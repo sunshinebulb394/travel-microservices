@@ -1,0 +1,22 @@
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .logo {
+    display: inline-block;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .links {
+    display: flex;
+    align-items: center;
+  }
+  
+  .links a {
+    margin-right: 10px;
+  }
+  

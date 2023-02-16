@@ -27,7 +27,7 @@ public class WebSecurityConfiguration {
         http.csrf().disable()
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(POST, "/api/accounts/*").permitAll();
-                    auth.requestMatchers("api/bus/bus-order").permitAll();
+                    auth.requestMatchers(GET,"/api/bus/bus-order/*").permitAll();
                     auth.anyRequest().authenticated();
                 }).httpBasic(withDefaults())
                 .authenticationProvider(authenticationProvider)

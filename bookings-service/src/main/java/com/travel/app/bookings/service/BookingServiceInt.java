@@ -9,11 +9,11 @@ import com.travel.app.bookings.pojo.Booking;
 import reactor.core.publisher.Mono;
 
 public interface BookingServiceInt {
-    String bookTrip(BookingDto bookingDto) throws BusNotAvailableException;
+    Booking bookTrip(BookingDto bookingDto) throws BusNotAvailableException;
     String updateBooking(Long id, BookingDto bookingDto);
     List<Booking> getAllBookings();
     void deleteBooking(Long id);
-    
+    List<Booking> getBookingById(String id);
     TicketDto retrieveTicket(String ticketNumber);
    
 

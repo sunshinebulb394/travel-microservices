@@ -1,0 +1,171 @@
+package com.travel.app.bus.service;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+import com.travel.app.bus.dto.BusDto;
+import com.travel.app.bus.dto.BusResponse;
+import com.travel.app.bus.dto.BusesAvailableDto;
+import com.travel.app.bus.exceptions.BusNotFoundException;
+import com.travel.app.bus.pojo.Bus;
+import com.travel.app.bus.pojo.BusesAvailable;
+import com.travel.app.bus.repository.BusRepository;
+import com.travel.app.bus.repository.BusesAvailableRepository;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.PrePersist;
+
+
+
+
+@Service
+public class BusServiceImp implements BusServiceInt {
+   
+    @Autowired
+    private BusRepository busRepository;
+    
+    @Autowired
+    private BusesAvailableRepository busesAvailableRepository;
+    
+    
+    public String add(BusDto busDto) {
+    	Bus bus = new Bus();
+    	bus.setBusType(busDto.getBusType());
+    	bus.setInsuranceNumber(busDto.getInsuranceNumber());
+    	bus.setRegistrationNumber(busDto.getRegistrationNumber());
+    	bus.setRoadWorthyExpiryDate(bus.getRoadWorthyExpiryDate());
+    	bus.setInsuranceCompany(busDto.getInsuranceCompany());
+    	bus.setInsuranceExpiryDate(busDto.getInsuranceExpiryDate());
+    	bus.setPurchaseDate(busDto.getPurchaseDate());
+    	bus.setCapacity(busDto.getCapacity());
+    	bus.setAvailable(busDto.getIsAvailable().toUpperCase().equals("yes"));
+    	
+    	BusesAvailable bAvailable = new BusesAvailable();
+    	bAvailable.setBus(bus);
+    	if(busDto.getIsAvailable().toUpperCase().equals("yes")) {
+    		busesAvailableRepository.save(bAvailable);
+    	}
+    	
+    	if (busRepository.findByRegistrationNumber(busDto.getRegistrationNumber()).isEmpty())
+    		busRepository.save(bus);
+    	return "Bus already added";
+    }
+    
+//    @Override
+//    public String addBusesAvailable() {
+//    	BusesAvailable busesAvailable = new BusesAvailable();
+//    	busesAvailable.setBusType(busesAvailableDto.getBusType());
+//    	busesAvailable.setNumberOfAvailableBuses(busesAvailableDto.getNumberOfAvailableBuses());
+//   
+//    	
+//    	List<Bus> buses = busesAvailableDto.getBus().stream()
+//    			.map(this::mapToDto)
+//    			.toList();
+//   
+//    	busesAvailable.setBus(buses);
+//    	busesAvailableRepository.save(busesAvailable);
+//    	return "Bus added";
+//      }
+//
+//      
+//
+//    
+//    
+//    private Bus mapToDto(BusDto busDto) {
+//    	Bus bus = new Bus();
+//		Optional<Bus> optional = busRepository.findByRegistrationNumber(busDto.getRegistrationNumber());
+//    	if(optional.isEmpty()){
+//    		bus.setBusType(busDto.getBusType());
+//    		bus.setInsuranceNumber(busDto.getInsuranceNumber());
+//    		bus.setPurchaseDate(busDto.getPurchaseDate());
+//    		bus.setRegistrationNumber(busDto.getRegistrationNumber());
+//    	}
+//    	
+//         return bus;
+//    }
+
+    @Override
+    public List<Bus> getAllBuses() {
+        return busRepository.findAll();
+    }
+
+//    @Override
+//    public List<Bus> findByBusType(String busType) {
+//        List<Bus> getBusByType = busRepository.findAll()
+//                .stream()
+//                .filter(bus -> bus.getBusType().contains(busType))
+//                .toList();
+//
+//        if(getBusByType.isEmpty())
+//            throw new BusNotFoundException("Bus not Found");
+//        else
+//            return getBusByType;
+//
+//    }
+
+	
+	  @Override public void updateBus(Long id, BusDto busRequest) {
+	  
+	  busRepository.findById(id) .map(bus1->{
+				  bus1.setBusType(busRequest.getBusType());
+				  bus1.setInsuranceNumber(busRequest.getInsuranceNumber()); 
+				  return busRepository.save(bus1);
+				  }).orElseThrow(()->new BusNotFoundException("Bus id not found"));
+	  
+	  }
+	 
+    
+    
+	
+	  @Override public String deleteBus(Long id) {
+	  busRepository.deleteById(id); return "Bus has been deleted"; }
+
+
+
+	@Override
+	public List<BusResponse> isAvailable(List<String> registrationNumber)
+			throws BusNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	  
+	  
+	 
+
+//    @Override
+//    public List<BusResponse> isAvailable(List<String> busType) throws BusNotFoundException {
+//            /*return busesAvailableReposioty.findByBusTypeIn(busType).stream()
+//                    .map(bus ->
+//                           BusResponse.builder()
+//                                   .busType(bus.getBusType())
+//                                   .numberOfSeats(bus.getNumberOfSeats())
+//                                   .isAvailable(bus.getAvailableForTrip().equals("YES"))
+//                                   .build()
+//                    ).toList();
+//                    */
+//    	return busesAvailableRepository.findByBusTypeIn(busType).stream()
+//    			.map(buses ->
+//    			 		BusResponse.builder()
+//    			 		.busType(buses.getBusType())
+//    			 		.numberOfSeats(buses.getSeatNumber())
+//    			 		.isAvailable(buses.getNumberOfAvailableBuses() > 0)
+//    			 		.build()
+//    					).toList();
+//            
+//        }
+
+	
+}
+
+	
+
+	
+	
+
+

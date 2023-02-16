@@ -1,0 +1,26 @@
+package com.travel.app.bus.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+
+
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class BusDto {
+    private String busType;
+    private String insuranceNumber;
+    private String registrationNumber;
+    private LocalDate purchaseDate;
+    private String insuranceCompany;
+    private LocalDate insuranceExpiryDate;
+    private LocalDate roadWorthyExpiryDate;
+    private Long capacity;
+    private String isAvailable;
+}
+

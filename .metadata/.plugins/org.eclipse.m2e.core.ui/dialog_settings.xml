@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="MavenProjectImportWizardPage">
+		<list key="rootDirectory">
+			<item value="/Users/georgebanin/Desktop/newproj/api-gateway"/>
+			<item value="/Users/georgebanin/Desktop/newproj/ticket-service"/>
+			<item value="/Users/georgebanin/Downloads/product-service"/>
+			<item value="/Users/georgebanin/Downloads/order-service "/>
+			<item value="/Users/georgebanin/Desktop/newproj/bookings-service"/>
+			<item value="/Users/georgebanin/Downloads/discovery-service"/>
+			<item value="/Users/georgebanin/Downloads/demo"/>
+			<item value="/Users/georgebanin/Desktop/newproj/route-service"/>
+			<item value="/Users/georgebanin/Desktop/newproj/routing-service"/>
+			<item value="/Users/georgebanin/Desktop/workspaces/JavaSpringboot/rentalService"/>
+			<item value="/Users/georgebanin/Desktop/newproj/user-service"/>
+			<item value="/Users/georgebanin/Desktop/newproj/bus-service"/>
+			<item value="/Users/georgebanin/Desktop/newproj/discovery-server"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="org.eclipse.m2e.core.pom.overview">
+	</section>
+	<section name="org.eclipse.m2e.core.pom.dependencies">
+	</section>
+</section>

@@ -1,0 +1,23 @@
+package com.travel.app.bus.service;
+
+
+import com.travel.app.bus.dto.BusDto;
+import com.travel.app.bus.dto.BusResponse;
+import com.travel.app.bus.dto.BusesAvailableDto;
+import com.travel.app.bus.exceptions.BusNotFoundException;
+import com.travel.app.bus.pojo.Bus;
+
+
+import java.util.List;
+
+public interface BusServiceInt {
+	String add(BusDto busDto);
+    List<Bus> getAllBuses() throws BusNotFoundException;
+    //List<Bus> findByBusType(String busType)throws BusNotFoundException;
+    void updateBus(Long id,BusDto busRequest)throws BusNotFoundException;
+    String deleteBus(Long id)throws BusNotFoundException;
+
+    public List<BusResponse> isAvailable(List<String> registrationNumber)throws BusNotFoundException;
+
+ 
+}

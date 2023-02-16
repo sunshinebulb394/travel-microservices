@@ -18,11 +18,14 @@ public class TicketController {
 	private TicketServiceImp ticketServiceImp;
 	
 	@PostMapping("/generate-ticket")
-	public void createTicket(@RequestParam("booking-number") String bookingNumber,
+	public Ticket createTicket(@RequestParam("booking-number") String bookingNumber,
 											   @RequestBody TicketDto ticketDto){
-		ticketServiceImp.createTicket(ticketDto);
+		return ticketServiceImp.createTicket(ticketDto);
 
 	}
+
+
+
 
 	@GetMapping("/retrieve-ticket")
 	public ResponseEntity<Ticket> getTicket(@RequestParam("ticket-number") String ticketNumber ,

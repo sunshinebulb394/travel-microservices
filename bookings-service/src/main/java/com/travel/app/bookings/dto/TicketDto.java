@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class TicketDto {
 	private String ticketNumber;
-    private BigDecimal price;
+    private Double price;
     private String busType;
-    private List<Long> seatNumber ;
-    private List<String> passengerName;
+    private Integer seatNumber ;
+    private String passengerName;
     
 }

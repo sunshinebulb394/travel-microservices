@@ -1,0 +1,16 @@
+package com.travel.app.bus.repository;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.travel.app.bus.pojo.Bus;
+import com.travel.app.bus.pojo.BusesAvailable;
+
+@Repository
+public interface BusesAvailableRepository extends JpaRepository<BusesAvailable, Long>{
+	Optional<BusesAvailable> findByRegistrationNumber(String registrationNumber);
+	
+}

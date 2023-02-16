@@ -1,0 +1,65 @@
+package com.travel.app.bus.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import com.travel.app.bus.dto.BusDto;
+import com.travel.app.bus.dto.BusResponse;
+import com.travel.app.bus.pojo.Bus;
+import com.travel.app.bus.service.BusServiceImp;
+
+
+
+@RestController
+@RequestMapping("/bus")
+public class BusController {
+    @Autowired
+    private BusServiceImp busServiceImp;
+
+
+    @PostMapping("/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String addBus(@RequestBody BusDto busDto){
+       return busServiceImp.add(busDto);
+
+
+    }
+
+    @PutMapping("/update-bus-details/{bus-id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateBus(@PathVariable("bus-id") Long busId,@RequestBody BusDto busRequest){
+        busServiceImp.updateBus(busId,busRequest);
+
+    }
+
+    @GetMapping("/get-all-buses")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Bus> getAllBuses(){
+        return busServiceImp.getAllBuses();
+    }
+
+//    @GetMapping("/{bus-type}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<Bus> findById(@PathVariable("bus-type") String busType){
+//        return busServiceImp.findByBusType(busType);
+//    }
+
+    @GetMapping("/delete-bus/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable("id")Long id){
+        busServiceImp.deleteBus(id);
+    }
+
+    @GetMapping("/bus-order")
+    @ResponseStatus(HttpStatus.OK)
+    public BusResponse isAvailable(@RequestParam("bus-type") String busType) {
+        return busServiceImp.isAvailable(busType);
+    }
+
+  
+
+
+}

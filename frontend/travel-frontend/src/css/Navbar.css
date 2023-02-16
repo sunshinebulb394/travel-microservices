@@ -1,0 +1,35 @@
+.navbar {
+    background-color: #f8f8f8;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  .navbar-links {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .navbar-link {
+    color: #333;
+    font-size: 18px;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .navbar-link:hover {
+    background-color: #333;
+    color: #f8f8f8;
+  }
+  

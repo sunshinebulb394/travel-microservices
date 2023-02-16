@@ -1,0 +1,65 @@
+package com.travel.app.bus.pojo;
+
+import java.time.LocalDate;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.travel.app.bus.repository.BusesAvailableRepository;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Builder
+@AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+public class Bus {
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long id;
+   
+   private String busType;
+   private String insuranceNumber;
+   private String registrationNumber;
+   private LocalDate purchaseDate;
+   private String insuranceCompany;
+   private LocalDate insuranceExpiryDate;
+   private LocalDate roadWorthyExpiryDate;
+   private Long capacity;
+   private String isAvailable;
+   @Builder.Default
+   private LocalDate dateAdded = LocalDate.now();
+   
+   @PrePersist
+   public void onPrePersist() {
+       if (isAvailable.equals("YES")) {
+           BusesAvailable busesAvailable = new BusesAvailable();
+           busesAvailable.setBus(this);
+           // Set the availableFrom and availableTo fields in the BusesAvailable entity here
+           // You can use the LocalDateTime.now() method to set the current time as the availableFrom value
+           // You can set the availableTo value to some time in the future, for example one hour from now
+           // Save the BusesAvailable entity to the database here
+       }
+   }
+   
+   
+   
+ 
+   
+   
+   
+   
+}

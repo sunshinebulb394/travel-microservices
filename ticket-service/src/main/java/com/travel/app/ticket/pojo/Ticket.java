@@ -22,13 +22,10 @@ public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@ElementCollection
-	private List<Long> seatNumber;
-	@ElementCollection
-	private List<String> passengerName;
+	private Integer seatNumber;
+	private String passengerName;
 	private String ticketNumber;
-	private BigDecimal price;
+	private Double price;
 	private String busType;
 	
 

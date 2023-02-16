@@ -34,7 +34,7 @@ public class TicketServiceImp implements TicketServiceInt {
 
 	@Override
 	public Ticket getTicket(String ticketNumber) {
-		return ticketRepository.findByTicketNumber(ticketNumber);
+		return ticketRepository.findByTicketNumber(ticketNumber).get();
 	}
 
 

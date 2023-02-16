@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;TicketController.java&apos; to &apos;ticket-service/src/main/java/com.travel.app.ticket.controller&apos;&#x0A;- Original project: &apos;ticket-service&apos;&#x0A;- Destination element: &apos;ticket-service/src/main/java/com.travel.app.ticket.controller&apos;&#x0A;- Original element: &apos;com.travel.app.ticket.TicketController.java&apos;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.travel.app.ticket.controller" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.travel.app.ticket{TicketController.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1670083021943" units="1" version="1.0"/>
+</session>

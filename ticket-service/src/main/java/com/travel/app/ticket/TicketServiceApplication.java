@@ -16,17 +16,17 @@ public class TicketServiceApplication {
 		SpringApplication.run(TicketServiceApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner commandLineRunner(TicketRepository ticketRepository){
-		return args -> {
-			Ticket ticket = new Ticket();
-			ticket.setTicketNumber("123456");
-			List<String> names = List.of("John","Smith");
-			ticket.setPassengerName(names);
-
-
-			ticketRepository.save(ticket);
-		};
-	}
+//	@Bean
+//	CommandLineRunner commandLineRunner(TicketRepository ticketRepository){
+//		return args -> {
+//			Ticket ticket = new Ticket();
+//			ticket.setTicketNumber("123456");
+//			List<String> names = List.of("John","Smith");
+//			ticket.setPassengerName(names);
+//
+//
+//			ticketRepository.save(ticket);
+//		};
+//	}
 
 }

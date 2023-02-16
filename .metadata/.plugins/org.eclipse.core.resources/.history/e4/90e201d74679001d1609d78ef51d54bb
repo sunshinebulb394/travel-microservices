@@ -1,0 +1,41 @@
+package com.travel.app.bus.pojo;
+
+import java.time.LocalDate;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Builder
+@AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+public class Bus {
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long id;
+   
+   private String busType;
+   private String insuranceNumber;
+   private String registrationNumber;
+   private LocalDate purchaseDate;
+   private String insuranceCompany;
+   private LocalDate insuranceExpiryDate;
+   private LocalDate roadWorthyExpiryDate;
+   private boolean isAvailable;
+   @Builder.Default
+   private LocalDate dateAdded = LocalDate.now();
+   
+   
+   
+}

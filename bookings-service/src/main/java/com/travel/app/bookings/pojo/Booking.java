@@ -1,5 +1,6 @@
 package com.travel.app.bookings.pojo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -21,12 +22,12 @@ public class Booking {
     private Long id;
     private String bookingNumber;
     private LocalTime pickupTime;
-    private LocalDate dateBooked;
+    private LocalDate travelDate;
     @Builder.Default
     private LocalDate createdAt = LocalDate.now();
     private String pickupLocation;
-    private Long numOfPersons;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Trips trip ;
-
+    private String destination;
+    private String passengerName;
+    private String busType;
+    private String phoneNumber;
 }

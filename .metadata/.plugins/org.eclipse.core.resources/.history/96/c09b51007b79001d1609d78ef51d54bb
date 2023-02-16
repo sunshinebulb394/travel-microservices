@@ -1,0 +1,58 @@
+package com.travel.app.bookings.controller;
+
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import com.travel.app.bookings.dto.BookingDto;
+import com.travel.app.bookings.dto.TicketDto;
+import com.travel.app.bookings.dto.TripsDto;
+import com.travel.app.bookings.service.BookingServiceImp;
+
+import reactor.core.publisher.Mono;
+
+
+@RestController
+@RequestMapping("/booking")
+public class BookingController {
+
+    @Autowired
+    private BookingServiceImp bookingServiceImp;
+
+
+    @PostMapping("/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Mono<?> bookTrip(@RequestBody BookingDto bookRequest){
+    	return bookingServiceImp.bookTrip(bookRequest);
+        
+    }
+    
+    @PutMapping("/update-booking")
+    @ResponseStatus(HttpStatus.OK)
+    public String updateBooking(@RequestParam("booking-id") Long bookingId,@RequestBody BookingDto bookingDto) {
+    	return bookingServiceImp.updateBooking(bookingId, bookingDto);
+    }
+
+    @GetMapping("/all-bookings")
+    public ResponseEntity<?> getAllBookings(){
+        return ResponseEntity.ok(bookingServiceImp.getAllBookings());
+    }
+
+//    @DeleteMapping("/delete-trip")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void deletTrip(@RequestParam("id") Long id) {
+//    	bookingServiceImp.deleteTrip(id);
+//    }
+//    
+//    @PostMapping("/gen-ticket")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public TicketDto generateTicket(@RequestParam("booking-number") String bookingNumber) {
+//    	return bookingServiceImp.generateTicket(bookingNumber);
+//    }
+    
+}
