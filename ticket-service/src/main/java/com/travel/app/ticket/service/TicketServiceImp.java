@@ -13,13 +13,14 @@ public class TicketServiceImp implements TicketServiceInt {
 	private TicketRepository ticketRepository;
 
 	@Override
-	public Ticket createTicket(TicketDto ticketDto) {
+	public Ticket createTicket(String bookingNumber ,TicketDto ticketDto) {
 		Ticket ticket = new Ticket();
 		ticket.setBusType(ticketDto.getBusType());
 		ticket.setPassengerName(ticketDto.getPassengerName());
 		ticket.setSeatNumber(ticketDto.getSeatNumber());
-		ticket.setTicketNumber(ticketDto.getTicketNumber());
+		ticket.setTicketNumber(bookingNumber);
 		ticket.setPrice(ticketDto.getPrice());
+		ticket.setDestination(ticketDto.getDestination());
 		ticketRepository.save(ticket);
 		
 		return ticket;

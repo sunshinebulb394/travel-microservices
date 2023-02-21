@@ -16,10 +16,10 @@ import lombok.NoArgsConstructor;
 public class TicketDto {
 	private Integer seatNumber;
 	private String passengerName;
-	private String ticketNumber;
 	private Double price;
 	private String busType;
-
+	private String destination;
+	private String ticketNumber;
 	
 
 }

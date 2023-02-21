@@ -45,7 +45,7 @@ public class BookingController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> getBookingById(@RequestParam("id") String id,
+    public ResponseEntity<?> getBookingByBookingNumber(@RequestParam("number") String id,
                                       @RequestHeader("Content-Type") String contentType,
                                       @RequestHeader("Authorization")String authorization){
         HttpHeaders headers = new HttpHeaders();
@@ -53,7 +53,22 @@ public class BookingController {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         if(MediaType.TEXT_PLAIN_VALUE.equals(contentType)&& bearerToken.contentEquals(authorization)){
-            List<Booking> bookings = bookingServiceImp.getBookingById(id);
+            List<Booking> bookings = bookingServiceImp.getBookingByBookingNumber(id);
+            return new ResponseEntity<>(bookings, headers, HttpStatus.OK);
+        }
+        return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
+    }
+    @GetMapping("/id")
+    public ResponseEntity<?> getBookingById(@RequestParam("id") String id,
+                                            @RequestHeader("Content-Type") String contentType,
+                                            @RequestHeader("Authorization")String authorization){
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        if(MediaType.TEXT_PLAIN_VALUE.equals(contentType)&& bearerToken.contentEquals(authorization)){
+
+            List<Booking> bookings = bookingServiceImp.getBookingByBookingId(Long.valueOf(id));
             return new ResponseEntity<>(bookings, headers, HttpStatus.OK);
         }
         return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
@@ -108,7 +123,7 @@ public class BookingController {
                                                     @RequestHeader("Content-Type") String contentType,
                                                     @RequestHeader("Authorization") String authorization) {
 
-        if(MediaType.APPLICATION_JSON_VALUE.equals(contentType)&& bearerToken.contentEquals(authorization)){
+        if(MediaType.TEXT_PLAIN_VALUE.equals(contentType)&& bearerToken.contentEquals(authorization)){
             TicketDto ticket = bookingServiceImp.generateTicket(bookingNumber);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

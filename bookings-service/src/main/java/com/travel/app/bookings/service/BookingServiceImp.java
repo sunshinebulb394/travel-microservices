@@ -96,12 +96,22 @@ public class BookingServiceImp implements BookingServiceInt{
 
 
 	@Override
-	public List<Booking> getBookingById(String id) {
+	public List<Booking> getBookingByBookingNumber(String bookingNum) {
 		return bookingRepository.findAll()
 				.stream()
 				.filter(num -> {
 					String bookingNumber = num.getBookingNumber();
-					return bookingNumber != null && bookingNumber.equals(id);
+					return bookingNumber != null && bookingNumber.equals(bookingNum);
+				})
+				.collect(Collectors.toList());
+	}
+	@Override
+	public List<Booking> getBookingByBookingId(Long id) {
+		return bookingRepository.findAll()
+				.stream()
+				.filter(num -> {
+					Long bookingId = num.getId();
+					return bookingId != null && bookingId.equals(id);
 				})
 				.collect(Collectors.toList());
 	}
@@ -125,7 +135,7 @@ public class BookingServiceImp implements BookingServiceInt{
 
 
 	public TicketDto generateTicket(String bookingNumber) {
-		Booking booking = bookingRepository.findByBookingNumber(bookingNumber).get();
+		Booking booking = bookingRepository.findByBookingNumber(bookingNumber).stream().findFirst().get();
 		String busType = booking.getBusType();
 		String destination = booking.getDestination();
 		Optional<Trip> costOfTrip = tripRepository.findByDestination(destination);
@@ -133,10 +143,10 @@ public class BookingServiceImp implements BookingServiceInt{
 		if(booking.getBusType().equals("VVIP")){
 			cost += 100;
 		}
-		int seatNum = (int)(Math.random() * 4) + 1;
+		int seatNum = (int)(Math.random() * 30) + 1;
 		TicketDto ticketRequest	=	TicketDto.builder()
-				.ticketNumber(booking.getBookingNumber())
 				.price(cost)
+				.destination(booking.getDestination())
 				.seatNumber(seatNum)
 				.busType(booking.getBusType())
 				.passengerName(booking.getPassengerName())
@@ -145,7 +155,7 @@ public class BookingServiceImp implements BookingServiceInt{
 		return webClientConfig.webClientBuilder()
 				.build()
 				.post()
-				.uri("http://ticket-service/ticket/generate-ticket",uri -> uri.queryParam("booking-number", bookingNumber).build())
+				.uri("http://ticket-service/ticket/generate-ticket",uri -> uri.queryParam("booking-number", booking.getBookingNumber()).build())
 				.header(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_VALUE)
 				.body(Mono.just(ticketRequest),TicketDto.class)
 				.retrieve()

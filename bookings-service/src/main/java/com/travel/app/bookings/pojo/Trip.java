@@ -15,7 +15,7 @@ public class Trip {
     @Id
     @GeneratedValue
     private Integer id;
-    private double costOfTrip;
+    private Double costOfTrip;
     private String destination;
 
 }

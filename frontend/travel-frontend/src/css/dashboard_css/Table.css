@@ -1,0 +1,37 @@
+.my-table {
+    width: 70rem;
+    font-family: 'Helvetica Neue', sans-serif;
+    position: absolute;
+    top:5pc;
+    left:24ch;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .my-table th {
+    border-bottom: 1px solid green;
+    text-align: left;
+    padding: 20px;
+    color: #333;
+  }
+  
+  .my-table td {
+    padding: 20px;
+    color: #333;
+  }
+  
+  .btn {
+    transition: all 1s ease-in-out; /* Add transition property to all buttons */
+  }
+
+  .btn:hover {
+    font-size: 1.4rem; /* Increase font size on hover */
+  }
+  /* .my-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+   */
+  /*.my-table tr:hover {
+    background-color: #f0f0f0;
+  }
+  */

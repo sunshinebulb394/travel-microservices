@@ -1,0 +1,53 @@
+ @media print {
+    .modal-header,
+    .modal-footer {
+      display: none;
+    }
+
+    body * {
+      visibility: hidden;
+      display: none;
+      background-color: black;
+
+}
+    #modal-print, #modal-print * {
+      visibility: visible;
+      display: block;
+    }
+    #modal-print {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  } 
+  
+  .refresh-button {
+    background-color: green;
+    border-radius: 50%;
+    color: white; /* optional, changes the text color to white */
+    padding: 5px; /* optional, adds some padding to the button */
+    border: none; /* optional, removes the border */
+    width: 40px; /* optional, sets the width of the button */
+    height: 40px; /* optional, sets the height of the button */
+    transition: all 0.2s ease-in-out; /* adds a transition effect to all CSS properties */
+  }
+  
+  .refresh-button:hover,
+  .refresh-button:focus,
+  .refresh-button:active {
+    transform: scale(1.1); /* increases the scale of the button when it's clicked or hovered */
+  }
+  
+  .my-table {
+    margin: 20px;
+    border-collapse: collapse;
+  }
+  
+  .my-table th,
+  .my-table td {
+    padding: 10px;
+    text-align: left;
+   
+  }
+  
+  

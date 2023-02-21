@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 function Index() {
   return (
+   
     <div>
-  
+   <Navbar />
     <div class="container-fluid">
       <div class="justify ">
       <Link to="/booking">
@@ -14,8 +17,7 @@ function Index() {
     </Link>
     </div>
   <h1>Travel App</h1>
-
-  
+<Footer />
 </div>
     
 

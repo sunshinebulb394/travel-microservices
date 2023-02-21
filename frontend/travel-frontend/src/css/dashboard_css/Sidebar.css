@@ -1,0 +1,44 @@
+.position-fixed h3{
+    font-size: large;
+    padding: 10px;
+}
+.position-fixed {
+    position: fixed;
+  }
+  
+  .left-0 {
+    left: 0;
+  }
+  
+  .top-0 {
+    top: 0;
+  }
+  
+  .d-flex {
+    display: flex;
+  }
+  
+  .flex-column {
+    flex-direction: column;
+  }
+  
+  .d-none {
+    display: none;
+  }
+  
+  .nav-link {
+    background-color: white;
+    color: #333;
+  }
+  /* active effect */
+.active {
+    background-color: #444 !important;
+    color: #fff !important;
+  }
+  
+  /* hover effect */
+  .nav-pills .nav-link:hover {
+    background-color: #444 !important;
+    color: #fff !important;
+  }
+  

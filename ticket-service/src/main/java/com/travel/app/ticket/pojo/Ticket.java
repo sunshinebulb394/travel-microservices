@@ -27,6 +27,6 @@ public class Ticket {
 	private String ticketNumber;
 	private Double price;
 	private String busType;
-	
+	private String destination;
 
 }

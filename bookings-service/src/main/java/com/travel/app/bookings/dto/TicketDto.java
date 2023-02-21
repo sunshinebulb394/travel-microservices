@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class TicketDto {
-	private String ticketNumber;
     private Double price;
+    private String ticketNumber;
     private String busType;
     private Integer seatNumber ;
     private String passengerName;
-    
+    private String destination;
 }

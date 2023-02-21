@@ -20,7 +20,7 @@ public class TicketController {
 	@PostMapping("/generate-ticket")
 	public Ticket createTicket(@RequestParam("booking-number") String bookingNumber,
 											   @RequestBody TicketDto ticketDto){
-		return ticketServiceImp.createTicket(ticketDto);
+		return ticketServiceImp.createTicket(bookingNumber,ticketDto);
 
 	}
 

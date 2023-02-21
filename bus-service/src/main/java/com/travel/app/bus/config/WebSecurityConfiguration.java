@@ -3,16 +3,19 @@ package com.travel.app.bus.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static org.springframework.http.HttpMethod.GET;
+
 import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.security.config.Customizer.withDefaults;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 
 
 @Configuration
@@ -20,18 +23,42 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class WebSecurityConfiguration {
-    private final AccountAuthenticationProvider authenticationProvider;
+    //private final AccountAuthenticationProvider authenticationProvider;
+
+
+    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
+    private final LogoutHandler logoutHandler;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers(POST, "/api/accounts/*").permitAll();
-                    auth.requestMatchers(GET,"/api/bus/bus-order/*").permitAll();
-                    auth.anyRequest().authenticated();
-                }).httpBasic(withDefaults())
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf()
+                .disable()
+                .authorizeHttpRequests()
+                .requestMatchers(POST,"/api/users/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("http://localhost:3000/login")
+                .loginProcessingUrl("http://localhost:8081/api/users/authenticate")
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authenticationProvider(authenticationProvider)
-                .sessionManagement(c -> c.sessionCreationPolicy(STATELESS));
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout()
+                .logoutUrl("/api/users/logout")
+                .addLogoutHandler(logoutHandler)
+                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
+
         return http.build();
     }
+
+
+
+
 }
