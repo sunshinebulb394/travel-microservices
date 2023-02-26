@@ -119,7 +119,7 @@ public class BookingServiceImp implements BookingServiceInt{
 
 
 	@Override
-	    public List<Booking> getAllBookings() {
+	    public List<Booking> 	getAllBookings() {
 	     return bookingRepository.findAll();
 	    }
 
@@ -144,6 +144,7 @@ public class BookingServiceImp implements BookingServiceInt{
 			cost += 100;
 		}
 		int seatNum = (int)(Math.random() * 30) + 1;
+		//create dto object to send to ticket service
 		TicketDto ticketRequest	=	TicketDto.builder()
 				.price(cost)
 				.destination(booking.getDestination())
@@ -152,16 +153,17 @@ public class BookingServiceImp implements BookingServiceInt{
 				.passengerName(booking.getPassengerName())
 				.build();
 
+		//code to send request to tickiet service
 		return webClientConfig.webClientBuilder()
 				.build()
 				.post()
+				//send the request to the post method in ticket service
 				.uri("http://ticket-service/ticket/generate-ticket",uri -> uri.queryParam("booking-number", booking.getBookingNumber()).build())
 				.header(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_VALUE)
 				.body(Mono.just(ticketRequest),TicketDto.class)
 				.retrieve()
 				.bodyToMono(TicketDto.class)
 				.block();
-
 
 
 	}

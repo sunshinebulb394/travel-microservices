@@ -33,9 +33,6 @@ public class Bus {
    @Builder.Default
    private LocalDate dateAdded = LocalDate.now();
    
-   @OneToOne(cascade = CascadeType.ALL)
-   private BusesAvailable busesAvailable;
-   
  
    
    

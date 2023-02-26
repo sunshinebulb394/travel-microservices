@@ -91,29 +91,16 @@ public class BookingController {
     }
 
     @GetMapping("/all-bookings")
-    public ResponseEntity<?> getAllBookings( @RequestHeader("Content-Type") String contentType,
-                                             @RequestHeader("Authorization") String authorization){
-
-
-        if(MediaType.APPLICATION_JSON_VALUE.equals(contentType)&& bearerToken.contentEquals(authorization)){
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            List<Booking> allBookings = bookingServiceImp.getAllBookings();
-            return new ResponseEntity<>(allBookings, headers, HttpStatus.OK);
-        }
-        return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<?> getAllBookings(){
+        return new ResponseEntity<List<Booking>>(bookingServiceImp.getAllBookings(),HttpStatus.OK);
 
     }
 
-    @DeleteMapping("/delete-bookings")
-    public ResponseEntity<String> deleteBooking(@PathVariable Long id,
-                                                @RequestHeader("Content-Type") String contentType,
-                                                @RequestHeader("Authorization") String authorization){
-        if(MediaType.APPLICATION_JSON_VALUE.equals(contentType)&& bearerToken.contentEquals(authorization)){
+    @DeleteMapping("/delete-bookings/{id}")
+    public ResponseEntity<?> deleteBooking(@PathVariable Long id){
+
             bookingServiceImp.deleteBooking(id);
-            return ResponseEntity.ok("Booking deleted");
-        }
-        return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<String>("Booking has been deleted",HttpStatus.NO_CONTENT);
     }
 
 

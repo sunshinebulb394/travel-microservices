@@ -4,12 +4,19 @@ import com.travel.app.bus.config.LogoutService;
 import com.travel.app.bus.dto.AuthenticationRequest;
 import com.travel.app.bus.dto.AuthenticationResponse;
 import com.travel.app.bus.dto.RegisterRequest;
+import com.travel.app.bus.dto.ResponseMessage;
+import com.travel.app.bus.pojo.users.User;
+import com.travel.app.bus.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
 
     private final AuthenticationService service;
+    private final UserService userService;
 
     @PostMapping("/register/admin")
     public ResponseEntity<AuthenticationResponse> registerAdmin(@RequestBody RegisterRequest request) {
@@ -32,24 +40,24 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
+    @PostMapping("/revoke/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ResponseMessage> revokeUser(@PathVariable Integer id){
+        ResponseMessage message = userService.revokeUser(id);
+        return ResponseEntity.ok(message);
+    }
 
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> deleteUser(@PathVariable Integer id){
+        return ResponseEntity.ok(userService.deleteUser(id));
+    }
 
-//    @GetMapping("/all")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public ResponseEntity<List<User>>getAllAccount() {
-//        return ResponseEntity.ok(accountService.getAccounts());
-//    }
-//
-//    @DeleteMapping("/delete/{id}")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public void deleteAccount(@PathVariable("id") Long id) {
-//        accountService.deleteAccount(id);
-//    }
-//
-//    @PutMapping("/update/{id}")
-//    @PreAuthorize("hasRole('ADMIN', 'USER')")
-//    public ResponseEntity<User> updateAccount(@PathVariable("id") Long id, @RequestBody User user) throws AccountNotFoundException {
-//        return ResponseEntity.ok(accountService.updateAccount(id, user));
-//    }
+    @GetMapping("/all-users")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<List<User>>getAllUsers(){
+     List<User> users =    userService.getAllUsers();
+       return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 
 }

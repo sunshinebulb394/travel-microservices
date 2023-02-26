@@ -35,14 +35,18 @@ public class JwtService {
   }
 
   public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-    String role = userDetails.getAuthorities().stream().findFirst().get().toString();
+    String role = userDetails.getAuthorities()
+            .stream()
+            .map(Object::toString)
+            .findFirst()
+            .orElse("defaultRole");
     extraClaims.put("role",role);
     return Jwts
         .builder()
         .setClaims(extraClaims)
         .setSubject(userDetails.getUsername())
         .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24+300))
         .signWith(getSignInKey(), SignatureAlgorithm.HS256)
         .compact();
   }

@@ -30,9 +30,11 @@ public class BusServiceApplication {
 			User adminUser = new User();
 			User savedAdminUser = null;
 			adminUser.setEmail("baningeorge@gmail.com");
-			adminUser.setRole(Role.ADMIN);
+			adminUser.setRole(Role.ROLE_ADMIN);
 			adminUser.setFirstname("George");
 			adminUser.setLastname("Banin");
+			adminUser.setAccountEnabled(true);
+			adminUser.setAccountNonLocked(true);
 			adminUser.setPassword(passwordEncoder.encode("wonderful143"));
 			String adminToken = jwtService.generateToken(adminUser);
 			if(userRepository.findByEmail(adminUser.getEmail()).isEmpty()){

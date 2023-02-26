@@ -1,0 +1,48 @@
+
+.bookings-table th {
+  background-color: #333;
+  color: #fff;
+  text-align: left;
+}
+.bookings-table th, .bookings-table td {
+  font-size: 14px;
+  font-weight: normal;
+}
+.bookings-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+.bookings-table th, .bookings-table td {
+  padding: 12px;
+}
+.bookings-table {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.gg-block {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs,1));
+  width: 16px;
+  height: 16px;
+  border: 2px solid;
+  border-radius: 100%
+
+}
+.gg-block::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 10px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 5px;
+  transform: rotate(-45deg);
+  top: 5px;
+  left: 1px
+}

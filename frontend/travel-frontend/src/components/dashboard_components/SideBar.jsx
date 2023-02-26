@@ -44,72 +44,68 @@ function Sidebar() {
         }}
       >
          <h3>Dashboard</h3>
-        <NavItem>
-          <NavLink
-            as={Link}
-            to="/buses"
-            // add active effect
-            activeclassName="active"
-          >
-            Buses
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            as={Link}
-            to="/drivers"
-            // add active effect
-            activeClassName="active"
-          >
-            Drivers
-          </NavLink>
-        </NavItem>
-        <NavDropdown title="Messages" id="nav-dropdown">
+         <NavDropdown title="Buses" id="nav-dropdown">
           <NavDropdown.Item>
             <NavLink
               as={Link}
-              to="/messages/inbox"
+              to="/dashboard/bus-table"
               // add active effect
               activeClassName="active"
             >
-              Drivers
+              View Bus List
             </NavLink>
           </NavDropdown.Item>
           <NavDropdown.Item>
             <NavLink
               as={Link}
-              to="/messages/sent"
+              to="addbus"
               // add active effect
               activeClassName="active"
             >
-              Sent
+              Add Bus Details
             </NavLink>
           </NavDropdown.Item>
-          <NavDropdown.Item>
-            <NavLink
-              as={Link}
-              to="/messages/spam"
-              // add active effect
-              activeClassName="active"
-            >
-              Spam
-            </NavLink>
-          </NavDropdown.Item>
-          <NavDropdown.Item>
-            <NavLink
-              as={Link}
-              to="/messages/trash"
-              // add active effect
-              activeClassName="active"
-            >
-              Trash
-            </NavLink>
-          </NavDropdown.Item>
+         
+        
         </NavDropdown>
+        <NavDropdown title="Drivers" id="nav-dropdown">
+          <NavDropdown.Item>
+            <NavLink
+              as={Link}
+              to="/dashboard/driver-table"
+              // add active effect
+              activeClassName="active"
+            >
+             View Driver List
+            </NavLink>
+          </NavDropdown.Item>
+          <NavDropdown.Item>
+            <NavLink
+              as={Link}
+              to="addDriver"
+              // add active effect
+              activeClassName="active"
+            >
+              Add Driver Details
+            </NavLink>
+          </NavDropdown.Item>
+         
+        
+        </NavDropdown>
+        
         <NavItem>
           <NavLink
             as={Link}
-            to="/settings"
+            to="/dashboard/bookings"
+            // add active effect
+            activeClassName="active">
+            Bookings
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            as={Link}
+            to="/dashboard/users"
             // add active effect
             activeClassName="active"
           >

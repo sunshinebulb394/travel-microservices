@@ -30,6 +30,8 @@ public class User implements UserDetails {
     private String lastname;
     private String email;
     private String password;
+    private boolean isAccountNonLocked;
+    private boolean isAccountEnabled;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -59,7 +61,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return this.isAccountNonLocked;
     }
 
     @Override
@@ -69,6 +71,15 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.isAccountEnabled;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        // Set the accountNonLocked field directly
+        this.isAccountNonLocked= accountNonLocked;
+    }
+    public void setAccountEnabled(boolean accountEnabled) {
+        // Set the accountNonLocked field directly
+        this.isAccountEnabled = accountEnabled;
     }
 }

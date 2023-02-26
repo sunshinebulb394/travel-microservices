@@ -2,6 +2,9 @@ import { useState } from "react";
 import SearchBox from "./SearchBox";
 import { Modal, Button } from 'react-bootstrap';
 import '../css/ModalPrint.css';
+
+
+
 function BookingList(){
     const [bookings, setBookings] = useState([]);
     const [updateBooking, setUpdateBooking] = useState({});

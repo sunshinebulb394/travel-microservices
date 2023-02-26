@@ -22,6 +22,5 @@ public class BusDto {
     private LocalDate roadWorthyExpiryDate;
     private Long capacity;
     private String isAvailable;
-    private BusesAvailableDto busesAvailable;
 }
 
