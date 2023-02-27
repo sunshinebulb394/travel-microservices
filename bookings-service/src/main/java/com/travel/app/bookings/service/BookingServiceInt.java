@@ -13,7 +13,7 @@ public interface BookingServiceInt {
     String updateBooking(Long id, BookingDto bookingDto);
     List<Booking> getAllBookings();
     void deleteBooking(Long id);
-    List<Booking> getBookingByBookingNumber(String bookingNum);
+    List<Booking> getBookingByBookingNumber(String searchQuery);
     List<Booking> getBookingByBookingId(Long id);
 
     TicketDto retrieveTicket(String ticketNumber);

@@ -1,7 +1,6 @@
 package com.travel.app.bus.controller;
 
-import com.travel.app.bus.dto.BookingsDto;
-import com.travel.app.bus.dto.BusDto;
+import com.travel.app.bus.dto.*;
 import com.travel.app.bus.pojo.Bus;
 import com.travel.app.bus.service.BookingsService;
 import com.travel.app.bus.service.BusServiceImp;
@@ -76,6 +75,12 @@ public class BusController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public ResponseEntity<List<BookingsDto>> allBookings(){
         return new ResponseEntity<List<BookingsDto>>( bookingsService.getAllBookings(),HttpStatus.OK);
+    }
+
+    @PostMapping("/create-ticket/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    public ResponseEntity<?> createTicket(@PathVariable Long id){
+        return new ResponseEntity<TicketResponse>(bookingsService.createTicket(id),HttpStatus.CREATED);
     }
 
 //    @DeleteMapping("/delete-booking/{id}")

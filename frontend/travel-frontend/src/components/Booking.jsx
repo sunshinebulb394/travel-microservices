@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "../css/SearchForm.css"
 import { Link } from 'react-router-dom';
-
+import Navbar from './Navbar';
+import '../css/Booking.css';
 
 function Booking() {
    
@@ -66,6 +67,7 @@ function Booking() {
       return (
         
         <div>
+             <Navbar />
             <Link to="/bookinglist">
             <button type="button" className="btn btn-success btn-sm">
             <i class="bi bi-book"></i> &nbsp; View Bookings

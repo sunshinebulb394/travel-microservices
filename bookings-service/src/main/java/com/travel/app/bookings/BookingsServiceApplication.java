@@ -19,30 +19,6 @@ public class BookingsServiceApplication {
 		SpringApplication.run(BookingsServiceApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner commandLineRunner (BookingRepository bookingRepository,TripRepository tripRepository){
-		return args -> {
-			Booking booking = new Booking();
-			booking.setBookingNumber("654321");
-			booking.setPickupLocation("Mumbai");
-			booking.setPhoneNumber("0201219789");
-			bookingRepository.save(booking);
 
-//			Trip bolgatanga = new Trip();
-//			bolgatanga.setDestination("Bolgatanga");
-//			bolgatanga.setCostOfTrip(200.00);
-//			Trip kumasi = new Trip();
-//			kumasi.setDestination("kumasi");
-//			kumasi.setCostOfTrip(50.00);
-//			Trip koforidua = new Trip();
-//			koforidua.setDestination("Koforidua");
-//			koforidua.setCostOfTrip(100.00);
-//			Trip capeCoast = new Trip();
-//			capeCoast.setDestination("Cape Coast");
-//			capeCoast.setCostOfTrip(150.00);
-//			tripRepository.saveAll(List.of(bolgatanga,kumasi,capeCoast,koforidua));
-
-		};
-	}
 
 }

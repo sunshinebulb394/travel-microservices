@@ -2,6 +2,7 @@ package com.travel.app.bookings.service;
 
 import com.travel.app.bookings.pojo.Trip;
 import com.travel.app.bookings.repository.TripRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -51,28 +52,8 @@ public class BookingServiceImp implements BookingServiceInt{
 			booking.setBusType(bookingDto.getBusType());
 			booking.setDestination(bookingDto.getDestination());
 	        booking.setPhoneNumber(bookingDto.getPhoneNumber());
-
-	       
-	        // Call Bus Service, and book trip if bus is available
-	        BusResponse busResponses = webClientConfig.webClientBuilder()
-	                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-	                .build()
-	                .get()
-	                .uri("http://bus-service/api/bus/bus-order/booking-service",uriBuilder -> uriBuilder.queryParam("bus-type",bookingDto.getBusType()).build())
-	                .retrieve()
-	                .bodyToMono(BusResponse.class)
-	                .block();
-
-	        assert busResponses != null;
-	       
-	        boolean busIsAvailable = busResponses.isAvailable();
-	    
-	        if (busIsAvailable){
-	        	bookingRepository.save(booking);
-				return booking;
-	       }
-	        else
-	        	throw new BusNotAvailableException("Bus Not Available");
+			bookingRepository.save(booking);
+	   return booking;
 	        
 	    }
 	    
@@ -96,14 +77,12 @@ public class BookingServiceImp implements BookingServiceInt{
 
 
 	@Override
-	public List<Booking> getBookingByBookingNumber(String bookingNum) {
+	public List<Booking> getBookingByBookingNumber(String searchQuery) {
 		return bookingRepository.findAll()
 				.stream()
-				.filter(num -> {
-					String bookingNumber = num.getBookingNumber();
-					return bookingNumber != null && bookingNumber.equals(bookingNum);
-				})
+				.filter(booking -> booking.getBookingNumber().equals(searchQuery) || booking.getPhoneNumber().equals(searchQuery))
 				.collect(Collectors.toList());
+
 	}
 	@Override
 	public List<Booking> getBookingByBookingId(Long id) {

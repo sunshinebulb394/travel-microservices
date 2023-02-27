@@ -1,6 +1,7 @@
 package com.travel.app.ticket.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.List;
 
 import jakarta.persistence.ElementCollection;
@@ -14,12 +15,11 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class TicketDto {
-	private Integer seatNumber;
 	private String passengerName;
-	private Double price;
 	private String busType;
 	private String destination;
-	private String ticketNumber;
-	
+	private String bookingNumber;
+	private LocalTime pickupTime;
+	private String pickupLocation;
 
 }

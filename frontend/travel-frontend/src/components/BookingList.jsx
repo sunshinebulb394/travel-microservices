@@ -2,8 +2,8 @@ import { useState } from "react";
 import SearchBox from "./SearchBox";
 import { Modal, Button } from 'react-bootstrap';
 import '../css/ModalPrint.css';
-
-
+import Footer from './Footer';
+import Navbar from './Navbar';
 
 function BookingList(){
     const [bookings, setBookings] = useState([]);
@@ -148,9 +148,12 @@ function BookingList(){
     
     
       return (
+        <>
+          <Navbar/>
         <div>
-          <SearchBox onSearch={handleSearch} />
+         
           <table class="my-table">
+          <SearchBox onSearch={handleSearch} />
   <thead>
     <tr>
       <th>Booking Number</th>
@@ -273,8 +276,9 @@ function BookingList(){
     </div>
   )}
   <p> {successMessage && <p>{successMessage}</p>}</p>
-  
 </div>
+  <Footer/>
+</>
       );
 
 

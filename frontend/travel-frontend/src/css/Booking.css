@@ -1,0 +1,53 @@
+
+  .mainy{
+    text-align: LEFT;
+    justify-content: center;
+    display: flex;
+    padding:150px 0 150px 0 ;
+    opacity: 0.5px;
+  
+  }
+
+ .center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: 250px;
+        margin-bottom: 250px;
+      }
+
+      .viewbooking{
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: 100px;
+        /* margin-bottom: 250px; */
+      }
+
+      .bookbut{
+        position: absolute;
+        top: 83%;
+        left: 51%;
+        transform: translate(-50%, -50%);
+        margin-top: 100px;
+        /* margin-bottom: 250px; */
+      }
+
+      .h3head{
+        position: absolute;
+        top: 16%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: 100px;
+        /* margin-bottom: 250px; */ 
+      }
+      .h3heady{
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: 100px;
+        /* margin-bottom: 250px; */ 
+      }

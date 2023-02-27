@@ -5,7 +5,7 @@ import com.travel.app.ticket.pojo.Ticket;
 
 public interface TicketServiceInt {
 	
-	Ticket createTicket(String bookingNumber,TicketDto ticketDto);
+	Ticket createTicket(TicketDto ticketDto);
 	void deleteTicket(String ticketNumber);
 
 	Ticket getTicket(String ticketNumber);

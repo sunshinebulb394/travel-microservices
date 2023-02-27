@@ -50,14 +50,14 @@ function Users(){
             }
         })
         .then(response => {
-          console.log(response.data);
+          console.log("Response"+response.data);
           setUsers(response.data);
-          console.log(users.username);
+          console.log("username"+users.username);
         })
         .catch(error => {
             console.log(error);
         });
-    }, []);
+    }, [users.username]);
   
     const filteredUsers = users.filter(user =>
         (user.id && user.id.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -107,8 +107,9 @@ function Users(){
                         <th>Last Name</th>
                         <th>Email</th>
                         <th>Username</th>
+                        <th>Role</th>
                         <th>Account Enabled Status</th>
-
+                        
                         <th></th>
                       
                     </tr>
@@ -121,6 +122,7 @@ function Users(){
                             <td>{user.lastname}</td>
                             <td>{user.email}</td>
                             <td>{user.username}</td>
+                            <td>{user.role}</td>
                             <td>{user.accountNonLocked.toString()}</td>
                            <td> <button type="button" onClick={() => {setShowModal(true);setUserId(user.id);setUserAccount(user.accountNonLocked)}} className="btn btn-danger btn-sm">
                            <i class="bi bi-slash-circle-fill"></i> </button></td>

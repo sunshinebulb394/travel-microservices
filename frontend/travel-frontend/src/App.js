@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Index from './components/Index';
+import Index from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
 import Booking from './components/Booking';
@@ -16,15 +16,20 @@ import EditDriver from './components/dashboard_components/EditDriver';
 import AddDriver from './components/dashboard_components/AddDriver';
 import Bookings from './components/dashboard_components/Bookings';
 import Users from './components/dashboard_components/Users';
+import Form from './components/BookingForm';
+import BookingTable from './components/BookingsTable';
 
 function App() {
 
   return (
+    <>
     <Router>
+      
        <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" redirectUrl={'/'} element={<Login />} />
         <Route path="/" element={<Index />} />
+        <Route path="/booking-form" element={<Form />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="bus-table" element={<BusTable />} />
           <Route path="addbus" element={<AddBus />} />
@@ -35,13 +40,15 @@ function App() {
           <Route path="bookings" element={<Bookings/>} />
           <Route path="users" element={<Users/>} />
         </Route>
+        <Route path="/booking-table" element={<BookingTable />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/bookingList" element={<BookingList />} />
       </Routes>
-      
     </Router>
+      
+    </>
     
   );
 }

@@ -1,5 +1,9 @@
 package com.travel.app.ticket.service;
 
+import com.travel.app.ticket.repository.TripRepository;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,19 +11,30 @@ import com.travel.app.ticket.dto.TicketDto;
 import com.travel.app.ticket.pojo.Ticket;
 import com.travel.app.ticket.repository.TicketRepository;
 @Service
+@RequiredArgsConstructor
 public class TicketServiceImp implements TicketServiceInt {
 	
-	@Autowired
-	private TicketRepository ticketRepository;
+
+	private final TicketRepository ticketRepository;
+	private final TripRepository tripRepository;
+
 
 	@Override
-	public Ticket createTicket(String bookingNumber ,TicketDto ticketDto) {
+	public Ticket createTicket(TicketDto ticketDto) {
+		if (ticketRepository.findByTicketNumber(ticketDto.getBookingNumber()).isPresent()){
+			throw new EntityExistsException("Ticket already exists");
+		}
 		Ticket ticket = new Ticket();
 		ticket.setBusType(ticketDto.getBusType());
 		ticket.setPassengerName(ticketDto.getPassengerName());
-		ticket.setSeatNumber(ticketDto.getSeatNumber());
-		ticket.setTicketNumber(bookingNumber);
-		ticket.setPrice(ticketDto.getPrice());
+		ticket.setTicketNumber(ticketDto.getBookingNumber());
+		ticket.setPickupTime(ticketDto.getPickupTime());
+		ticket.setPickupLocation(ticketDto.getPickupLocation());
+		Double costOfTrip = tripRepository.findByDestination(ticketDto.getDestination()).get().getCostOfTrip();
+		if(ticketDto.getBusType().equals("VVIP")){
+			costOfTrip += 100;
+		}
+		ticket.setPrice(costOfTrip);
 		ticket.setDestination(ticketDto.getDestination());
 		ticketRepository.save(ticket);
 		
@@ -35,8 +50,12 @@ public class TicketServiceImp implements TicketServiceInt {
 
 	@Override
 	public Ticket getTicket(String ticketNumber) {
-		return ticketRepository.findByTicketNumber(ticketNumber).get();
+		return ticketRepository.findByTicketNumber(ticketNumber)
+				.stream()
+				.findFirst()
+				.orElseThrow(()-> new EntityNotFoundException("Ticket number not found"));
 	}
+
 
 
 }

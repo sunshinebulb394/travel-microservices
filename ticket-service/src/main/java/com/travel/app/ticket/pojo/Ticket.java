@@ -2,6 +2,7 @@ package com.travel.app.ticket.pojo;
 
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.List;
 
 import jakarta.persistence.ElementCollection;
@@ -22,11 +23,12 @@ public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Integer seatNumber;
 	private String passengerName;
 	private String ticketNumber;
 	private Double price;
 	private String busType;
 	private String destination;
+	private LocalTime pickupTime;
+	private String pickupLocation;
 
 }

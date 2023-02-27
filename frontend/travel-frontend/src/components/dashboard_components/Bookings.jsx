@@ -9,11 +9,32 @@ function Bookings(){
     const [showModal, setShowModal] = useState(false);
     const token = localStorage.getItem("token");
     const [bookingId, setBookingId] = useState(null);
-    const [deleteMessage, setDeleteMessage] = useState("");
+    const [message, setMessage] = useState("");
     const API_URL = 'http://localhost:8081/api/bus/all-bookings';
-
-
+  
     const handleClose = () => setShowModal(false);
+
+
+    
+  
+    const handleGenerateTicket = (bookingNumber) => {
+      fetch(`http://localhost:8081/api/bus/create-ticket/${bookingNumber}`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        method: "POST"
+      }).then((res) => {
+       if (res.status === 201) {
+        // Remove the deleted record from the state
+        setMessage("Ticket generated successfully");
+      }else if(res.status === 400){
+        setMessage("Ticket already generated");
+      }else{setMessage("Ticket generation failed");}
+        
+      })
+      // Handle the confirm action here
+      console.log('Confirm button clicked!');
+    }
 
     const handleConfirm = (id) => {
       fetch(`http://localhost:8081/booking/delete-bookings/${id}`,{
@@ -22,10 +43,10 @@ function Bookings(){
        if (res.status === 204) {
         // Remove the deleted record from the state
         setBookings(bookings.filter(item => item.id !== id));
-        setDeleteMessage("Booking deleted successfully");
+        setMessage("Booking deleted successfully");
       }else if(res.status === 400){
-        setDeleteMessage("You are not authorized to delete this Booking");
-      }else{setDeleteMessage("Something went wrong");}
+        setMessage("You are not authorized to delete this Booking");
+      }else{setMessage("Something went wrong");}
         setShowModal(false);
       })
       // Handle the confirm action here
@@ -80,15 +101,15 @@ function Bookings(){
           </Button>
         </Modal.Footer>
       </Modal>
-      {deleteMessage && 
+      {message && 
   <div style={{ display: 'flex', justifyContent: 'flex-start', marginLeft: '21pc'}}>
-    <div className="alert alert-success" role="alert">{deleteMessage}</div>
+    <div className="alert alert-success" role="alert">{message}</div>
   </div>
 }
 
             <h1>Bookings</h1>
             <input type="text" placeholder="Search" value={searchTerm} onChange={handleSearch} />
-            <table className="bookings-table">
+            <table className="bookings-table mt-3">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -101,6 +122,9 @@ function Bookings(){
                         <th>Passenger Name</th>
                         <th>Bus Type</th>
                         <th>Phone Number</th>
+                       
+                        
+                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -117,8 +141,12 @@ function Bookings(){
                             <td>{booking.passengerName}</td>
                             <td>{booking.busType}</td>
                             <td>{booking.phoneNumber}</td>
+                            
                             <td> <button type="button" onClick={() => {setShowModal(true);setBookingId(booking.id)}} className="btn btn-danger btn-sm">
          <i class="bi bi-trash"></i> 
+      </button></td>
+      <td> <button type="button" onClick={() => {handleGenerateTicket(booking.id)}} className="btn btn-outline-primary btn-block">
+      <i class="bi bi-ticket"> Generate Ticket</i>
       </button></td>
                         </tr>
                     ))}

@@ -1,7 +1,9 @@
 package com.travel.app.ticket;
 
 import com.travel.app.ticket.pojo.Ticket;
+import com.travel.app.ticket.pojo.Trip;
 import com.travel.app.ticket.repository.TicketRepository;
+import com.travel.app.ticket.repository.TripRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,15 +19,29 @@ public class TicketServiceApplication {
 	}
 
 //	@Bean
-//	CommandLineRunner commandLineRunner(TicketRepository ticketRepository){
+//	CommandLineRunner commandLineRunner(TripRepository tripRepository){
 //		return args -> {
-//			Ticket ticket = new Ticket();
-//			ticket.setTicketNumber("123456");
-//			List<String> names = List.of("John","Smith");
-//			ticket.setPassengerName(names);
-//
-//
-//			ticketRepository.save(ticket);
+//			Trip ho = Trip.builder()
+//					.destination("Ho")
+//					.costOfTrip(100.00)
+//					.build();
+//			Trip bolga = Trip.builder()
+//					.destination("Bolgatanga")
+//					.costOfTrip(200.00)
+//					.build();
+//			Trip kumasi = Trip.builder()
+//					.destination("Kumasi")
+//					.costOfTrip(150.00)
+//					.build();
+//			Trip capeCoast = Trip.builder()
+//					.destination("Cape Coast")
+//					.costOfTrip(120.00)
+//					.build();
+//			Trip kof = Trip.builder()
+//					.destination("Koforidua")
+//					.costOfTrip(170.00)
+//					.build();
+//			tripRepository.saveAll(List.of(ho,bolga,kumasi,kof,capeCoast));
 //		};
 //	}
 
