@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import com.travel.app.ticket.dto.TicketDto;
 import com.travel.app.ticket.pojo.Ticket;
 import com.travel.app.ticket.repository.TicketRepository;
+
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class TicketServiceImp implements TicketServiceInt {
@@ -50,10 +53,8 @@ public class TicketServiceImp implements TicketServiceInt {
 
 	@Override
 	public Ticket getTicket(String ticketNumber) {
-		return ticketRepository.findByTicketNumber(ticketNumber)
-				.stream()
-				.findFirst()
-				.orElseThrow(()-> new EntityNotFoundException("Ticket number not found"));
+		Optional<Ticket> ticket = ticketRepository.findByTicketNumber(ticketNumber);
+		return ticket.orElse(null);
 	}
 
 

@@ -1,94 +1,65 @@
-import { Button, Form, Input, Select } from 'antd';
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { useState } from "react";
+import "./dashboard_components/Dashboard";
+import { useNavigate } from "react-router-dom";
 import React from 'react';
+import {
+  MDBContainer,
+  MDBInput,
+  MDBCheckbox,
+  MDBBtn,
+  MDBIcon,
+  
+}
+from 'mdb-react-ui-kit';
 
-const { Option } = Select;
-
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-};
-
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
-
-const App: React.FC = () => {
-  const [form] = Form.useForm();
-
-  const onGenderChange = (value: string) => {
-    switch (value) {
-      case 'male':
-        form.setFieldsValue({ note: 'Hi, man!' });
-        break;
-      case 'female':
-        form.setFieldsValue({ note: 'Hi, lady!' });
-        break;
-      case 'other':
-        form.setFieldsValue({ note: 'Hi there!' });
-        break;
-      default:
-    }
-  };
-
-  const onFinish = (values: any) => {
-    console.log(values);
-  };
-
-  const onReset = () => {
-    form.resetFields();
-  };
-
-  const onFill = () => {
-    form.setFieldsValue({ note: 'Hello world!', gender: 'male' });
-  };
-
+function App() {
+    const navigate = useNavigate();
+      const [email, setEmail] = useState("");
+      const [password, setPassword] = useState("");
+      const [authenticated, setauthenticated] = useState(localStorage.getItem("authenticated") || false);
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await fetch("http://localhost:8081/api/users/authenticate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+          const data = await response.json();
+          if (data.token) {
+            setauthenticated(true);
+            localStorage.setItem("authenticated", true);
+            localStorage.setItem("token", data.token);
+            navigate("/dashboard/bus-table");
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      };
   return (
-    <Form
-      {...layout}
-      form={form}
-      name="control-hooks"
-      onFinish={onFinish}
-      style={{ maxWidth: 600 }}
-    >
-      <Form.Item name="note" label="Note" rules={[{ required: true }]}>
-        <Input />
-      </Form.Item>
-      <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
-        <Select
-          placeholder="Select a option and change input text above"
-          onChange={onGenderChange}
-          allowClear
-        >
-          <Option value="male">male</Option>
-          <Option value="female">female</Option>
-          <Option value="other">other</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item
-        noStyle
-        shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}
-      >
-        {({ getFieldValue }) =>
-          getFieldValue('gender') === 'other' ? (
-            <Form.Item name="customizeGender" label="Customize Gender" rules={[{ required: true }]}>
-              <Input />
-            </Form.Item>
-          ) : null
-        }
-      </Form.Item>
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-        <Button htmlType="button" onClick={onReset}>
-          Reset
-        </Button>
-        <Button type="link" htmlType="button" onClick={onFill}>
-          Fill form
-        </Button>
-      </Form.Item>
-    </Form>
+    <MDBContainer className="p-3 my-5 d-flex flex-column w-50" >
+        <form onSubmit={handleSubmit} >
+      <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email' name='email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+      <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'  name="Password"
+        onChange={(e) => setPassword(e.target.value)}/>
+
+      <div className="d-flex justify-content-between mx-3 mb-4">
+        <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
+        <a href="!#">Forgot password?</a>
+      </div>
+
+      <MDBBtn className="mb-4"  type="submit"   value="Submit" >Sign in</MDBBtn>
+
+      <div className="text-center">
+        <p>Not a member? <a href="/register-login">Register</a></p>
+       
+       
+      </div>
+      </form>
+    </MDBContainer>
   );
-};
+}
 
 export default App;

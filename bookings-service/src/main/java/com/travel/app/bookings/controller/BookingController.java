@@ -59,17 +59,15 @@ public class BookingController {
         return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
     }
     @GetMapping("/id")
-    public ResponseEntity<?> getBookingById(@RequestParam("id") String id,
-                                            @RequestHeader("Content-Type") String contentType,
+    public ResponseEntity<?> getBookingById(@RequestParam("id") Long id,
+
                                             @RequestHeader("Authorization")String authorization){
-        HttpHeaders headers = new HttpHeaders();
 
-        headers.setContentType(MediaType.APPLICATION_JSON);
 
-        if(MediaType.TEXT_PLAIN_VALUE.equals(contentType)&& bearerToken.contentEquals(authorization)){
+        if( bearerToken.contentEquals(authorization)){
 
-            List<Booking> bookings = bookingServiceImp.getBookingByBookingId(Long.valueOf(id));
-            return new ResponseEntity<>(bookings, headers, HttpStatus.OK);
+            List<Booking> bookings = bookingServiceImp.getBookingByBookingId(id);
+            return new ResponseEntity<>(bookings,HttpStatus.OK);
         }
         return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
     }

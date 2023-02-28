@@ -11,7 +11,7 @@ const EditBus = () => {
     capacity: '',
     insuranceCompany: '',
     insuranceExpiryDate: '',
-    roadWorthyExpiryDate: '',
+    roadWorthyExpiryDate: '', 
     isAvailable: '',
   });
   const [error, setError] = useState('');

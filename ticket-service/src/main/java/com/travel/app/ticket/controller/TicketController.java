@@ -29,8 +29,11 @@ public class TicketController {
 
 	@GetMapping("/retrieve-ticket")
 	public ResponseEntity<Ticket> getTicket(@RequestParam("ticket-number") String ticketNumber){
-
-			return new ResponseEntity<>(ticketServiceImp.getTicket(ticketNumber),HttpStatus.OK);
+			Ticket ticket = ticketServiceImp.getTicket(ticketNumber);
+			if(ticket != null){
+				return new ResponseEntity<>(ticket,HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 

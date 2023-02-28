@@ -25,7 +25,7 @@ function Sidebar() {
     if (response.ok) {
       localStorage.removeItem("token");
       setAuthenticated(false);
-      navigate("/login");
+      navigate("/login-register");
     }
   }
   return (
@@ -37,16 +37,17 @@ function Sidebar() {
         style={{
           // set custom font and colors
           fontFamily: 'Montserrat, sans-serif',
-          backgroundColor: '#333',
+          backgroundColor: 'darkgreen',
           color: '#fff',
           width: '10pc',
           height:'100pc'
         }}
       >
          <h3>Dashboard</h3>
-         <NavDropdown title="Buses" id="nav-dropdown">
-          <NavDropdown.Item>
+         <NavDropdown title="Buses" id="nav-dropdown" >
+          <NavDropdown.Item >
             <NavLink
+              
               as={Link}
               to="/dashboard/bus-table"
               // add active effect

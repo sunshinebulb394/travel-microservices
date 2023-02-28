@@ -18,7 +18,9 @@ import Bookings from './components/dashboard_components/Bookings';
 import Users from './components/dashboard_components/Users';
 import Form from './components/BookingForm';
 import BookingTable from './components/BookingsTable';
-
+import EditBookingForm from './components/EditbookingForm';
+import LoginRegister from './components/LoginRegister';
+import RegisterLogin from './components/RegisterLogin';
 function App() {
 
   return (
@@ -26,8 +28,7 @@ function App() {
     <Router>
       
        <Routes>
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" redirectUrl={'/'} element={<Login />} />
+        
         <Route path="/" element={<Index />} />
         <Route path="/booking-form" element={<Form />} />
         <Route path="/dashboard" element={<Dashboard />}>
@@ -41,10 +42,13 @@ function App() {
           <Route path="users" element={<Users/>} />
         </Route>
         <Route path="/booking-table" element={<BookingTable />} />
+        <Route path="/editbooking" element={<EditBookingForm />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/bookingList" element={<BookingList />} />
+        <Route path="/login" element={<LoginRegister />} />
+        <Route path="/register" element={<RegisterLogin/>} />
       </Routes>
     </Router>
       
