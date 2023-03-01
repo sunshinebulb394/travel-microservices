@@ -1,10 +1,10 @@
 .card-container{
  position: relative;
-  left: 40rem;
-  width: 500px;
-  height: 400px;
-  padding: 20px;
-  margin-top: 50px;
+  left: 10px;
+  width: 200px;
+  height: 500px;
+  padding: 10px;
+  margin-top: 1px;
   overflow: hidden;
   box-shadow: 0px 20px 15px -15px;
   transition: 3.10;

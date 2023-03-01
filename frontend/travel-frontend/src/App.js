@@ -21,6 +21,7 @@ import BookingTable from './components/BookingsTable';
 import EditBookingForm from './components/EditbookingForm';
 import LoginRegister from './components/LoginRegister';
 import RegisterLogin from './components/RegisterLogin';
+import Footer from './components/Footer';
 function App() {
 
   return (
@@ -49,9 +50,11 @@ function App() {
         <Route path="/bookingList" element={<BookingList />} />
         <Route path="/login" element={<LoginRegister />} />
         <Route path="/register" element={<RegisterLogin/>} />
+          
+
       </Routes>
     </Router>
-      
+    
     </>
     
   );
